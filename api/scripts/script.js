@@ -1,10 +1,14 @@
 const getTestResults = (inputData)=>{
     let rsl = inputData.rsl;
     let cvd = inputData.covid;
+    let about = inputData.about;
     let outputData = {
+        user_detail : getUserDetails(about),
         risk_status: rslTest(rsl),
         covid_status : covidTest(cvd).covidStatus,
         covid_tip : covidTest(cvd).covidTip,
+        test_date : Date.now,
+        input:inputData,
     };
     return outputData;
 }
@@ -27,7 +31,10 @@ const getTestResults = (inputData)=>{
 // if any rsl = 1, outputData.risk_status = 'High Risk'
 // outputData.risk_status = 'High Risk' + any cvd , proceed to test
 
-
+// get user details
+const getUserDetails = (about) =>{
+    return about;
+}
 // cvd_probable test
 const covidTest = (cvd) =>{
     let covidStatus = "";
@@ -106,8 +113,10 @@ let inpData = {
     sex : "",
     state : "",
     city : "",
+    streetname : "",
     occupation : "",
     question : "",
+
     },
     rsl : 
     {
@@ -144,11 +153,12 @@ let inpData = {
     cvd_q_headache : 0,
     cvd_q_malaise : 0,
     cvd_q_loss_of_smell : 0,
+    cvd_q_loss_of_taste : 0,
     cvd_others : "",
     }
 }
 
-// console.log(getTestResults(JSON.stringify(inpData)))
+// console.log(JSON.stringify(inpData))
 //////////////////////////////////////////////////////
 
 module.exports = getTestResults;
