@@ -1,7 +1,5 @@
 const getTestResults = (inputData)=>{
     let rsl = inputData.rsl;
-    let cvd = inputData.covid;
-    let about = inputData.about;
     let outputData = {
         user_detail : getUserDetails(about),
         risk_status: rslTest(rsl),
@@ -31,12 +29,53 @@ const getTestResults = (inputData)=>{
 // if any rsl = 1, outputData.risk_status = 'High Risk'
 // outputData.risk_status = 'High Risk' + any cvd , proceed to test
 
+
+// get unique ID
+const getUID = () => {
+return Math.random().toString(36).substring(2, 15);
+};
+
 // get user details
-const getUserDetails = (about) =>{
-    return about;
-}
+// returns JSON bject called user_details
+const setUserDetails = (inputData,gen_flag) =>{
+    let about = inputData.about;
+    let user_details = {};
+    // gen_flag determines whether to genrate new UID r not. 
+    // if set to 0, former UID is fetched form existing records...
+    // else, generate new UID using the getUID function.
+    // work in progress
+    if (gen_flag === 0) {
+            user_details = {
+            name : about.name,
+            phone : about.phone,
+            year : about.year,
+            sex : about.sex,
+            state : about.state,
+            city : about.city,
+            streetname : about.streetname,
+            occupation : about.occupation,
+            question : about.question,
+        };
+    } else {
+        
+            user_details = {
+            name : about.name,
+            phone : about.phone,
+            year : about.year,
+            sex : about.sex,
+            state : about.state,
+            city : about.city,
+            streetname : about.streetname,
+            occupation : about.occupation,
+            question : about.question,
+            userID : getUID(),
+            };
+    }
+    return user_details;
+};
 // cvd_probable test
-const covidTest = (cvd) =>{
+const getCVDResult = (inputData) =>{
+    let cvd = inputData.covid;
     let covidStatus = "";
     let covidTip = "";
     if (
@@ -73,14 +112,15 @@ const covidTest = (cvd) =>{
     else{
         
     }
-    console.log(covidStatus);
-    return {covidStatus,covidTip};
+    return {covid_status : covidStatus,
+            covid_tip: covidTip};
 };
 
 
 // rsl test...
-const rslTest = (rsl) => {
+const getRSLResult = (inputData) => {
 let riskStatus = "";
+let rsl = inputData.rsl;
 if (rsl.q1_lung ||
     rsl.q2_smoke ||
     rsl.q3_kidney ||
@@ -96,9 +136,8 @@ if (rsl.q1_lung ||
     } else{
     riskStatus = 'Low Risk';
 }
-console.log(riskStatus);
-return riskStatus;
-}
+return {risk_status : riskStatus};
+};
 // outputData.testing_grp = "Priority Test Group";
 ///////////////////////////////////////////////////
 
@@ -160,5 +199,5 @@ let inpData = {
 
 // console.log(JSON.stringify(inpData))
 //////////////////////////////////////////////////////
-
-module.exports = getTestResults;
+const tags = {getRSLResult,getCVDResult,setUserDetails}
+module.exports = tags ;
