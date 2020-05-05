@@ -17,6 +17,12 @@ const apiRoute = require('./api/routes/routes');
 app.use('/api',apiRoute);
 
 
+mongoose.connect(process.env.DB_CONNECTION,
+    { useNewUrlParser: true, useUnifiedTopology: true  },
+    ()=>{
+        console.log("Connected to DB");
+    }
+);
 // start the server listening for requests
 app.listen(process.env.PORT || 3000, 
 	() => console.log("Server is running..."));

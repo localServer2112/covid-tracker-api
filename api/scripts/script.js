@@ -32,13 +32,13 @@ const getTestResults = (inputData)=>{
 
 // get unique ID
 const getUID = () => {
-return Math.random().toString(36).substring(2, 15);
+    return Math.random().toString(36).substring(2, 15);
 };
 
 // get user details
 // returns JSON bject called user_details
 const setUserDetails = (inputData,gen_flag) =>{
-    let about = inputData.about;
+    let about = inputData;
     let user_details = {};
     // gen_flag determines whether to genrate new UID r not. 
     // if set to 0, former UID is fetched form existing records...
@@ -75,7 +75,7 @@ const setUserDetails = (inputData,gen_flag) =>{
 };
 // cvd_probable test
 const getCVDResult = (inputData) =>{
-    let cvd = inputData.covid;
+    let cvd = inputData;
     let covidStatus = "";
     let covidTip = "";
     if (
@@ -120,7 +120,7 @@ const getCVDResult = (inputData) =>{
 // rsl test...
 const getRSLResult = (inputData) => {
 let riskStatus = "";
-let rsl = inputData.rsl;
+let rsl = inputData;
 if (rsl.q1_lung ||
     rsl.q2_smoke ||
     rsl.q3_kidney ||
@@ -199,5 +199,5 @@ let inpData = {
 
 // console.log(JSON.stringify(inpData))
 //////////////////////////////////////////////////////
-const tags = {getRSLResult,getCVDResult,setUserDetails}
+const tags = {getRSLResult,getCVDResult,setUserDetails,getUID}
 module.exports = tags ;
