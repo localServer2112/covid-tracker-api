@@ -40,7 +40,6 @@ router.get('/user',async (req, res)=>{
 router.post('/user', async (req,res) => {
   // using the model, we create a new user
   const new_user = new dataModel({
-      userID : tags.getUID,
       name: req.body.name,
       phone: req.body.phone,
       year: req.body.year,
@@ -70,7 +69,7 @@ router.put('/user', async (req,res) => {
   const updateUser = dataModel.findOneAndUpdate(
       // the title of the item to find
       {userID : req.body.userID},
-      {details : req.body},
+      req.body,
       {new: true},
       
       // the callback function
