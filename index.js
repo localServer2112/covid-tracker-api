@@ -24,17 +24,23 @@ app.use("/api", apiRoute);
 //     }
 // );
 
-try {
-  mongoose.connect(process.env.DB_CONNECTION, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  });
+// Connect to Database, this way you can see any error
+const connectDB = async () => {
+  try {
+    mongoose.connect(process.env.DB_CONNECTION, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
 
-  console.log("Connected to DB");
-} catch (error) {
-  console.log(error);
-  process.exit(1);
-}
+    console.log("Connected to DB");
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+};
+
+// Call connectDB
+connectDB();
 
 // start the server listening for requests
 app.listen(process.env.PORT || 3000, () => console.log("Server is running..."));
